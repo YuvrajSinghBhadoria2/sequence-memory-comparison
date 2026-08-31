@@ -17,6 +17,13 @@ attention at the same parameter budget on a held-out validation split
 - `linattn` (fixed decay): validation loss **2.003**
 - `attn` (Transformer): validation loss **2.201**
 
+**…but flip the question to exact one-shot recall and the winner inverts.**
+The same budgets were re-tested on associative recall (find the value paired
+with a key in the context). The Transformer learns the task (~26% exact, ~20x
+chance) while both constant-memory families stay at the random floor (~3%,
+chance is 1.2%) — see `results/PROBE_RESULTS.md`. A model can look great at
+*predicting* text and still be unable to *recall* a specific fact.
+
 **Why it matters:** this reproduces, at small scale and on the linear-attention
 side, a finding published by the Forgetting Transformer (FoX, arXiv:2503.02130):
 letting each token *learn how much to forget* is better than a fixed decay or no
@@ -71,6 +78,7 @@ can recall specific facts, not just predict text.
 ## Read next
 
 - `RESULTS.md` — exact numbers, curves, and what they mean.
+- `results/PROBE_RESULTS.md` — the recall probe: who can actually remember.
 - `PROTOCOL.md` — the frozen protocol and fairness rules.
 - `REPRODUCE.md` — full environment and reproduction steps.
 - `NOVELTY.md` — the literature check and why no novelty claim is made.

@@ -26,12 +26,13 @@ worked example of checking novelty before claiming.
 2. **Memory/quality trade-off:** extend the protocol to measure decode-time
    memory (state size) per family and plot the Pareto frontier with 2-3 more
    budget points.
-3. **Recall probe:** the open gap in the literature (per `NOVELTY.md`) is
-   constant-memory models failing long-context recall. Status: **in flight
-   (v3, 1500 steps/family)** — see `PROTOCOL.md` for the three-version history
-   (v1 lookup flaw, v2 too-hard + distance-logging bug, v3 final). Update
-   `RESULTS.md` with accuracy per family/R/distance after the runs, then run
-   `probe_stress.py` on the trained checkpoints for heavier loads.
+3. **Recall probe:** Status: **done (v3)** — full numbers in
+   `results/PROBE_RESULTS.md` and raw logs in `results/probe3_*_1500_log.json`.
+   Headline: with the same 0.92M/1500-step budget, softmax attention learns
+   one-shot associative recall while fixed-decay and learned-decay linear
+   memories stay at chance — inverting the perplexity ranking (see
+   `RESULTS.md`). Next worthwhile step is longer context (train.py `SEQ`) or a
+   bigger model to climb beyond 26% and confirm the ordering at scale.
 
 ## Rules
 

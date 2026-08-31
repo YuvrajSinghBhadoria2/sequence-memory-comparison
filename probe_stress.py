@@ -16,7 +16,7 @@ from train import Model
 
 def main():
     fam = sys.argv[1]
-    ckpt = torch.load(f"results/probe3_{fam}_600.pt", map_location="cpu")
+    ckpt = torch.load(f"results/probe3_{fam}_1500.pt", map_location="cpu")
     model = Model(fam, VOCAB)
     model.load_state_dict(ckpt["model"])
     model.eval()

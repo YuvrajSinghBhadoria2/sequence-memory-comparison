@@ -1,0 +1,18 @@
+[attn] params 0.92M
+[attn] R 8 acc 0.1367 near 0.1280 far 0.1450
+[attn] R10 acc 0.1289 near 0.1653 far 0.0963
+[attn] R12 acc 0.1406 near 0.1322 far 0.1481
+[attn] R14 acc 0.0547 near 0.0508 far 0.0580
+[attn] R16 acc 0.1016 near 0.1042 far 0.0982
+[linattn] params 0.92M
+[linattn] R 8 acc 0.0039 near 0.0081 far 0.0000
+[linattn] R10 acc 0.0156 near 0.0155 far 0.0157
+[linattn] R12 acc 0.0000 near 0.0000 far 0.0000
+[linattn] R14 acc 0.0156 near 0.0087 far 0.0213
+[linattn] R16 acc 0.0039 near 0.0074 far 0.0000
+[decayattn] params 0.92M
+[decayattn] R 8 acc 0.0156 near 0.0078 far 0.0234
+[decayattn] R10 acc 0.0117 near 0.0083 far 0.0148
+[decayattn] R12 acc 0.0117 near 0.0078 far 0.0157
+[decayattn] R14 acc 0.0156 near 0.0160 far 0.0153
+[decayattn] R16 acc 0.0195 near 0.0000 far 0.0420

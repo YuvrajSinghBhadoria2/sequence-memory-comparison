@@ -27,7 +27,12 @@
 ## How results were preserved
 
 - Machine-saved evidence (not chat claims): raw per-step logs in `results/`
-  `*_600_log.json` are included here under the same `results/` path.
+  `*_600_log.json` are included here under the same `results/` path, and the
+  recall-probe logs as `results/probe3_*_1500_log.json` with the stress
+  transcript `results/probe3_stress.txt`.
+- The recall probe runs (v3) executed 2026-08-31 07:21-10:17 IST on this
+  machine (the overnight attempt was interrupted when the laptop slept; the
+  runs were restarted in the morning and completed without further pauses).
 - The closed-form-vs-recurrence verification number (max abs diff ~9.3e-9)
   was produced by a scripted numerical comparison on this machine.
 - Checkpoints (`.pt`, ~3.6 MB each) are deliberately excluded; they are
