@@ -21,20 +21,20 @@ pip install torch==2.2.2 numpy==1.26.4
 
 ```bash
 # 0) tiny smoke test (a few seconds) - proves the environment works
-python train.py attn 30
+python -m experiments.train attn 30
 
 # 1) decisive runs (600 steps each, ~20-35 min per family on a laptop CPU)
-python train.py attn 600
-python train.py linattn 600
-python train.py decayattn 600
+python -m experiments.train attn 600
+python -m experiments.train linattn 600
+python -m experiments.train decayattn 600
 
 # 2) sample text from the best family to see learning by eye
-python generate.py decayattn
+python -m experiments.generate decayattn
 
 # 3) recall probe (fully synthetic, no downloads; per family, ~30 min on CPU)
-python probe_recall.py attn 600
-python probe_recall.py linattn 600
-python probe_recall.py decayattn 600
+python -m experiments.probe_recall attn 600
+python -m experiments.probe_recall linattn 600
+python -m experiments.probe_recall decayattn 600
 ```
 
 First run downloads Tiny Shakespeare (~1.1 MB) from the raw char-rnn repo into
@@ -42,7 +42,7 @@ First run downloads Tiny Shakespeare (~1.1 MB) from the raw char-rnn repo into
 
 ## What you should see
 
-- Three `results/<family>_600_log.json` files.
+- Three `results/language_modeling/<family>_600_log.json` files.
 - Validation loss at step 500: `decayattn` ~1.79 < `linattn` ~2.00 < `attn`
   ~2.20 (see `RESULTS.md`).
 - `generate.py decayattn` prints visibly Shakespeare-shaped text; an untouched

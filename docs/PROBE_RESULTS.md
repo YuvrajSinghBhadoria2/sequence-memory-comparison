@@ -1,6 +1,6 @@
 # Recall probe results (v3, final) — 1500 steps per family
 
-Machine-saved evidence: `results/probe3_<family>_1500_log.json`.
+Machine-saved evidence: `results/recall_probe/probe3_<family>_1500_log.json`.
 Chance accuracy for this task: 1/82 = **0.0122** (82-symbol vocabulary;
 prediction on a 512-pool would be far lower, but here values live inside the
 82 symbols the model knows, so the conservative floor is 1/82).
@@ -22,7 +22,7 @@ never better than a uniform guess on this task).
 
 ## Heavier-load stress (trained checkpoints, NO retraining)
 
-From `results/probe3_stress.txt` (256 fresh instances per cell; sampling noise
+From `results/recall_probe/probe3_stress.txt` (256 fresh instances per cell; sampling noise
 is ~0.02 around each value at this n):
 
 | Load R | attn | linattn | decayattn |

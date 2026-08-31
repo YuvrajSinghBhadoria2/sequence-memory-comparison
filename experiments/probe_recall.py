@@ -23,7 +23,7 @@ import time
 import torch
 import torch.nn.functional as F
 
-from train import Model
+from experiments.train import Model
 
 KEY_N = 16                  # key tokens 0..15
 VAL_N = 64                  # value pool 16..79

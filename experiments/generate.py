@@ -1,11 +1,10 @@
 """Generate text from a trained family checkpoint to make results visible."""
-import json
-import os
 import sys
 
 import torch
 
-from train import Model, load_data
+from experiments.train import Model, load_data
+
 
 def gen(model, tok_enc, tok_dec, n=400, seed=0):
     torch.manual_seed(seed)
@@ -22,12 +21,20 @@ def gen(model, tok_enc, tok_dec, n=400, seed=0):
             seq = torch.cat([seq[1:], torch.tensor([nxt], dtype=torch.long)])
         return "".join(out)
 
-fam = sys.argv[1]
-train_ids, val_ids, vocab = load_data()
-tok_enc = {c: i for i, c in enumerate(sorted(set(open("data/tinyshakespeare.txt", encoding="utf-8").read())))}
-tok_dec = {i: c for c, i in tok_enc.items()}
-print("=" * 20, fam, "=" * 20)
-model = Model(fam, vocab)
-model.load_state_dict(torch.load(f"results/{fam}_600.pt", map_location="cpu")["model"])
-print("TRAINED", fam)
-print(gen(model, tok_enc, tok_dec))
+
+def main():
+    fam = sys.argv[1]
+    _, _, vocab = load_data()
+    tok_enc = {c: i for i, c in enumerate(sorted(set(
+        open("data/tinyshakespeare.txt", encoding="utf-8").read())))}
+    tok_dec = {i: c for c, i in tok_enc.items()}
+    print("=" * 20, fam, "=" * 20)
+    model = Model(fam, vocab)
+    model.load_state_dict(torch.load(f"results/{fam}_600.pt",
+                                     map_location="cpu")["model"])
+    print("TRAINED", fam)
+    print(gen(model, tok_enc, tok_dec))
+
+
+if __name__ == "__main__":
+    main()

@@ -10,8 +10,8 @@ import sys
 
 import torch
 
-from probe_recall import BATCH, EVAL_N, VOCAB, eval_acc, make_batch
-from train import Model
+from experiments.probe_recall import BATCH, EVAL_N, VOCAB, eval_acc, make_batch
+from experiments.train import Model
 
 
 def main():

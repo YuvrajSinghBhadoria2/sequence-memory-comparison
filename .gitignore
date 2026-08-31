@@ -1,6 +1,14 @@
+# Environments / caches
 .venv*/
-data/
-results/*.pt
-logs/
 __pycache__/
+*.pyc
+
+# Downloaded data (recreated automatically, see docs/REPRODUCE.md)
+data/
+
+# Model checkpoints (small, but trivially regenerable; keep the JSON logs)
+results/**/*.pt
+*.pt
+
+# OS / editor noise
 .DS_Store
