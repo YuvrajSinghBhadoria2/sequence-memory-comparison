@@ -123,9 +123,10 @@ def main():
                   f"{time.perf_counter()-t0:.0f}s", flush=True)
         log.append(row)
     os.makedirs("results", exist_ok=True)
+    tag = f"_seed{seed}" if seed else ""
     torch.save({"model": model.state_dict(), "family": fam, "params": sum(
-        p.numel() for p in model.parameters())}, f"results/probe3_{fam}_{steps}.pt")
-    with open(f"results/probe3_{fam}_{steps}_log.json", "w") as f:
+        p.numel() for p in model.parameters())}, f"results/probe3_{fam}_{steps}{tag}.pt")
+    with open(f"results/probe3_{fam}_{steps}{tag}_log.json", "w") as f:
         json.dump(log, f)
     print(f"[{fam}] probe v3 done: {sum(p.numel() for p in model.parameters())/1e6:.2f}M "
           f"final R8 acc {row.get('acc_R8', 'n/a')}", flush=True)

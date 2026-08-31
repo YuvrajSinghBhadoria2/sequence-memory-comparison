@@ -256,10 +256,11 @@ def main():
             print(f"[{fam}] step {step}/{steps} loss {loss.item():.4f} val {vloss:.4f} "
                   f"rate {rate:.2f}M tok/s mem {n_params/1e6:.1f}M", flush=True)
     os.makedirs("results", exist_ok=True)
+    tag = f"_seed{seed}" if seed else ""
     torch.save({"model": model.state_dict(), "families": fam, "params": n_params},
-               f"results/{fam}_{steps}.pt")
+               f"results/{fam}_{steps}{tag}.pt")
     os.makedirs("results", exist_ok=True)
-    with open(f"results/{fam}_{steps}_log.json", "w") as f:
+    with open(f"results/{fam}_{steps}{tag}_log.json", "w") as f:
         json.dump(log, f)
     print(f"[{fam}] done: params {n_params/1e6:.2f}M final loss {log[-1]['loss']:.4f} saved", flush=True)
 
