@@ -50,13 +50,24 @@ python -m experiments.probe_recall attn 1500 3
 
 Seed 0 is `sys.argv`/seed 0 and keeps the original untagged filenames.
 
+Note on paths: the scripts print seed-tagged files to `results/`; after the
+runs they are collected into `results/language_modeling/` and
+`results/recall_probe/` alongside the seed-0 files listed above. The content
+is the machine-saved run logs, unmodified.
+
 ## Verdict table (filled in after the runs)
+
+Verdict: **PASS — all frozen rules met on every seed (0-3).** Data below is
+read from the machine-saved logs in `results/language_modeling/` and
+`results/recall_probe/`.
 
 | Check | seed 0 | seed 1 | seed 2 | seed 3 | Rule met? |
 |---|---|---|---|---|---|
-| LM ranking decayattn < linattn < attn | yes | | | | |
-| attn probe R8 >= 3x chance | yes | | | | |
-| linattn/decayattn probe R8 <= 0.05 | yes | | | | |
+| LM ranking decayattn < linattn < attn (step-500 val loss) | 1.7925 < 2.0035 < 2.2007 | 1.8051 < 2.0022 < 2.2131 | 1.8081 < 1.9931 < 2.1698 | 1.7978 < 2.0147 < 2.1992 | yes, all seeds |
+| attn probe R8 >= 3x chance (0.0366) | 0.117 | 0.121 | 0.129 | 0.098 | yes, all seeds |
+| linattn probe R8 <= 0.05 | 0.019 | 0.016 | 0.016 | 0.004 | yes, all seeds |
+| decayattn probe R8 <= 0.05 | 0.019 | 0.016 | 0.016 | 0.004 | yes, all seeds |
+| attn R8 >= 3x each const-memory family | yes | yes | yes | yes | yes, all seeds |
 
 ## Honesty notes
 

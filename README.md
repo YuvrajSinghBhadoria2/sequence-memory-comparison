@@ -105,7 +105,7 @@ links to a log file.
 
 ### 1) Prediction: held-out validation loss (lower = better)
 
-600 steps, same budget, single seed (raw logs:
+600 steps, same budget (raw logs:
 `results/language_modeling/*.log.json`):
 
 | Family | Val loss @ step 500 |
@@ -115,7 +115,9 @@ links to a log file.
 | `attn` (Transformer) | 2.201 |
 
 → **Learned per-token decay predicts text best.** Consistent with the
-Forgetting Transformer line of work (no novelty claimed).
+Forgetting Transformer line of work (no novelty claimed). The strict ranking
+also holds across seeds 1-3 (fresh init + batching); seed-robustness details
+and the four-seed table are in `docs/SEED_ROBUSTNESS.md`.
 
 ### 2) Recall: exact-match accuracy (higher = better)
 
@@ -130,6 +132,8 @@ Forgetting Transformer line of work (no novelty claimed).
 
 → **Only the Transformer learns to recall facts.** The constant-memory
 families — including the *better predictor* — never leave the random floor.
+Same story in all four seeds (0-3): `attn` is 5-10x chance every time,
+`linattn`/`decayattn` are at chance every time (`docs/SEED_ROBUSTNESS.md`).
 
 ### 3) Stress: heavier loads, no retraining
 

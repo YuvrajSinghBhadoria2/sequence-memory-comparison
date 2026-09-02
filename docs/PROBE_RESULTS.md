@@ -20,6 +20,21 @@ The Transformer also visibly improves with training (loss 4.20 -> 3.29); both
 constant-memory families stay pinned at the random floor (loss ~4.17, i.e.
 never better than a uniform guess on this task).
 
+## Seed robustness (final R8 across 4 seeds)
+
+Decision rules frozen in `docs/SEED_ROBUSTNESS.md` before the runs; verdict:
+**PASS on every seed**. Final R8 at step 1500 (chance 1/82 = 0.0122):
+
+| Family | seed 0 | seed 1 | seed 2 | seed 3 |
+|---|---|---|---|---|
+| `attn` (Transformer) | **0.117** | **0.121** | **0.129** | **0.098** |
+| `linattn` (fixed decay) | 0.019 | 0.016 | 0.016 | 0.004 |
+| `decayattn` (learned decay) | 0.019 | 0.016 | 0.016 | 0.004 |
+
+`attn` is ~5-10x chance and well above both constant-memory families in every
+seed; the constant-memory families are at/near chance in every seed (all
+`<= 0.05`). Raw logs: `results/recall_probe/probe3_*_1500_seed*_log.json`.
+
 ## Heavier-load stress (trained checkpoints, NO retraining)
 
 From `results/recall_probe/probe3_stress.txt` (256 fresh instances per cell; sampling noise
@@ -48,8 +63,9 @@ too. No load shows ANY retained recall for linattn/decayattn.
   the same constant-memory families beat the Transformer at next-token
   prediction. Take-away, stated plainly: a model can look great at
   *predicting* text and simultaneously be unable to *recall* a specific fact.
-- Limits: absolute accuracies are modest (the Transformer reaches 26% at R4;
-  0.92M is small and 1500 steps is still budget-limited). The meaningful signal
-  is the decisive ordering, not the absolute numbers. Only one architecture
-  config and one seed per family was run; the stress numbers carry ~0.02
+- Limits: absolute accuracies are modest (the Transformer reaches ~26% at R4 in
+  the best seed; 0.92M is small and 1500 steps is still budget-limited). The
+  meaningful signal is the decisive ordering, and it holds across four
+  independent seeds. Only one architecture
+  config per family was run; the stress numbers carry ~0.02
   sampling noise. None of this changes the direction of the effect.

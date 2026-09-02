@@ -31,9 +31,21 @@ MLP 576, DROP 0.1, LR 3e-4 (AdamW), CLIP 1.0, EVAL_EVERY 500`.
 2. **Random init control:** untrained model output is indistinguishable noise;
    trained output is coherent Shakespeare-shaped text, confirming training
    signal, not initialization luck.
-3. **Robustness re-runs (seeds 1-2)** were started on the original machine and
-   are preserved in the initiative's raw logs for independent confirmation of
-   the ordering across seeds.
+3. **Seed robustness (seeds 1-3):** full repeatability run with three
+   independent seeds (fresh init, batching, and probe instances) at the
+   identical frozen protocol. Decision rules were frozen in
+   `docs/SEED_ROBUSTNESS.md` before any run. **Verdict: PASS on every seed.**
+
+Step-500 validation loss across all four seeds (0 original + 1-3 new):
+
+| Family | seed 0 | seed 1 | seed 2 | seed 3 |
+|---|---|---|---|---|
+| `decayattn` (learned forget) | **1.7925** | **1.8051** | **1.8081** | **1.7978** |
+| `linattn` (fixed decay) | 2.0035 | 2.0022 | 1.9931 | 2.0147 |
+| `attn` (Transformer) | 2.2007 | 2.2131 | 2.1698 | 2.1992 |
+
+The strict ranking `decayattn < linattn < attn` holds in all four seeds, with
+every gap positive (0.18-0.22 nats). Raw logs: `results/language_modeling/*_600_seed*_log.json`.
 
 ## Limitations (read before believing too much)
 
@@ -41,8 +53,9 @@ MLP 576, DROP 0.1, LR 3e-4 (AdamW), CLIP 1.0, EVAL_EVERY 500`.
   extrapolate to large-scale conclusions.
 - Single configuration and single dataset; no downstream task, no exact-match /
   retrieval eval.
-- Results measure one seed each (0 by default); the reported ordering matches
-  the published literature (FoX), which increases trust but is not a guarantee.
+- Results are reported across four seeds (0 original + 1-3); the ordering holds
+  in every seed and matches the published literature (FoX), which increases
+  trust but is not a guarantee.
 - `decayattn` is the slowest of the three to train in this closed form.
 
 ## Raw evidence
@@ -59,8 +72,9 @@ context) instead of next-token prediction. Protocol and the full version
 history (including two flaws we caught and fixed) are in `PROTOCOL.md`; the
 full numbers are in `docs/PROBE_RESULTS.md`.
 
-Headline: **the Transformer learns recall (26% at R4, ~10-20x chance) while
-both constant-memory families stay at the chance floor (2-3%)**, and the same
-ordering holds under heavier loads. The families that won the perplexity race
+Headline: **the Transformer learns recall (~24% at R4, ~10x chance) while
+both constant-memory families stay at the chance floor (~2%)**, and the same
+ordering holds under heavier loads and across four independent seeds (see
+`SEED_ROBUSTNESS.md`). The families that won the perplexity race
 lose the recall race outright. See the "What this says" section in
 `PROBE_RESULTS.md` for the honest boundary of this finding.
